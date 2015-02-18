@@ -1,18 +1,25 @@
 var fs = require('fs');
 var marked = require('marked');
 var Q = require('q');
+var dir = __dirname + '/../data';
 
-function titleize(fileName) {
+function filenameToSlug(fileName) {
   return fileName.replace(/_/gi, '/').substring(0, fileName.length - 3);
 }
 
-function titleToFilename(title) {
-  title.replace(/\//gi, '_').concat('.md');
+function slugToFilename(slug) {
+  return slug.replace(/\//gi, '_').concat('.md');
 }
 
-exports.getPosts = function() {
+function titleize(slug) {
+  var truncated = slug.replace(/\d+|\//g, '');
+  return truncated.replace('-', ' ').split(' ').map(function(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }).join(' ');
+}
+
+exports.getAllPosts = function() {
   var posts = [],
-    dir = __dirname + '/../data',
     deferred = Q.defer();
 
   fs.readdir(dir, function(err, files) {
@@ -28,7 +35,7 @@ exports.getPosts = function() {
 
         var post = {};
 
-        post.slug = titleize(file);
+        post.slug = filenameToSlug(file);
         post.content = marked(fileData);
 
         posts.push(post);
@@ -43,3 +50,20 @@ exports.getPosts = function() {
   return deferred.promise;
 };
 
+exports.getPost = function(slug) {
+  var deferred = Q.defer(),
+    fileName = slugToFilename(slug),
+    post = {};
+
+  fs.readFile(dir + '/' + fileName, 'utf-8', function(err, fileData) {
+    if (err) throw err;
+
+    post.slug = slug;
+    post.title = titleize(slug);
+    post.content = marked(fileData);
+
+    return deferred.resolve(post);
+  });
+
+  return deferred.promise;
+};

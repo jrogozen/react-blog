@@ -14,7 +14,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/api/posts', function(req, res, next) {
-  Utils.getPosts()
+  Utils.getAllPosts()
     .then(function(data) {
       res.posts = data;
       next();
@@ -22,15 +22,24 @@ app.use('/api/posts', function(req, res, next) {
 });
 
 app.use(/\/api\/posts\/\S+/, function(req, res, next) {
+  var slug = req.baseUrl.replace('/api/posts/', '');
+
+  Utils.getPost(slug)
+    .then(function(data) {
+      res.post = data;
+      next();
+    });
+});
+
+app.get('/api/posts/:year/:month/:day/:title', function(req, res) {
+  console.log('hit the route ');
+  res.json(res.post);
 });
 
 app.get('/api/posts', function(req, res) {
   res.json(res.posts);
 });
 
-app.get('/api/posts/:slug', function(req, res) {
-
-});
 
 app.use(express.static('./public'));
 
