@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "browserify-fs": "^1.0.0",
-    "express": "3.x",
-    "marked": "^0.3.3"
+    "express": "4.x",
+    "marked": "^0.3.3",
+    "q": "^1.1.2",
+    "underscore": "^1.7.0"
   },
   "engines": {
     "node": ">=0.10.0"
