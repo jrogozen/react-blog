@@ -2,6 +2,7 @@ var fs = require('fs');
 var marked = require('marked');
 var Q = require('q');
 var dir = __dirname + '/../data';
+var _ = require('underscore');
 
 function filenameToSlug(fileName) {
   return fileName.replace(/_/gi, '/').substring(0, fileName.length - 3);
@@ -16,6 +17,10 @@ function titleize(slug) {
   return truncated.replace('-', ' ').split(' ').map(function(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }).join(' ');
+}
+
+function filenameToDate(fileName) {
+  return fileName.replace(/\D+/g, '');
 }
 
 exports.getAllPosts = function() {
@@ -38,11 +43,13 @@ exports.getAllPosts = function() {
         post.slug = filenameToSlug(file);
         post.content = marked(fileData);
         post.title = titleize(post.slug);
+        post.date = filenameToDate(file);
 
         posts.push(post);
 
         if (0 === --i) {
-          deferred.resolve(posts);
+          var sortedPosts = _.sortBy(posts, function(post){ return -post.date });
+          deferred.resolve(sortedPosts);
         }
 
       });
@@ -62,6 +69,7 @@ exports.getPost = function(slug) {
     post.slug = slug;
     post.title = titleize(slug);
     post.content = marked(fileData);
+    post.date = filenameToDate(fileName);
 
     return deferred.resolve(post);
   });

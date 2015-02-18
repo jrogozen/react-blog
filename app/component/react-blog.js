@@ -3,21 +3,6 @@ var React = require('../../vendor/react/react');
 var $ = require('jquery-browserify');
 
 var ReactBlog = React.createClass({
-  render: function() {
-    return (
-      <div className="layout">
-        <div className="layout layout-sidebar">
-          <PostList url="/api/posts"/>
-        </div>
-        <div className="layout layout-content">
-          Content
-        </div>
-      </div>
-    )
-  }
-});
-
-var PostList = React.createClass({
   getInitialState: function() {
     return {
       posts: []
@@ -33,7 +18,24 @@ var PostList = React.createClass({
     }.bind(this));
   },
   render: function() {
-    var posts = this.state.posts;
+    var latestPost = this.state.posts[0];
+
+    return (
+      <div className="layout">
+        <div className="layout layout-sidebar">
+          <PostList posts={this.state.posts}/>
+        </div>
+        <div className="layout layout-content">
+          <PostViewer post={latestPost}/>
+        </div>
+      </div>
+    )
+  }
+});
+
+var PostList = React.createClass({
+  render: function() {
+    var posts = this.props.posts;
 
     var postSnippets = posts.map(function(post, i) {
       return <PostSnippet data={post} key={i} />;
@@ -41,7 +43,9 @@ var PostList = React.createClass({
 
     return (
       <div className="posts-list">
-        {postSnippets}
+        <ul>
+          {postSnippets}
+        </ul>
       </div>
     )
   }
@@ -51,12 +55,32 @@ var PostSnippet = React.createClass({
   render: function() {
     var post = this.props.data;
     return (
-      <div>
+      <li>
         <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{__html: post.content}}/>
-      </div>
+      </li>
     )
   }
 });
+
+var PostViewer = React.createClass({
+  getInitialState: function() {
+    return {
+      post: this.props.post
+    }
+  },
+  render: function() {
+    /* handle check for initial load which doesn't include prop data yet */
+    if (this.props.post) {
+      return (
+        <div>
+          {this.props.post.title}
+        </div>
+      )
+    }
+    return (
+      <div/>
+    )
+  }
+})
 
 module.exports = ReactBlog;
