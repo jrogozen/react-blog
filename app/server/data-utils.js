@@ -37,6 +37,7 @@ exports.getAllPosts = function() {
 
         post.slug = filenameToSlug(file);
         post.content = marked(fileData);
+        post.title = titleize(post.slug);
 
         posts.push(post);
 

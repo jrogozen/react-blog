@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var _ = require('underscore');
 var Utils = require('./app/server/data-utils');
-var Q = require('q');
 
 app.set('js', app.get('env') === 'development' ? 'dev' : 'min');
 
@@ -32,14 +31,12 @@ app.use(/\/api\/posts\/\S+/, function(req, res, next) {
 });
 
 app.get('/api/posts/:year/:month/:day/:title', function(req, res) {
-  console.log('hit the route ');
   res.json(res.post);
 });
 
 app.get('/api/posts', function(req, res) {
   res.json(res.posts);
 });
-
 
 app.use(express.static('./public'));
 
