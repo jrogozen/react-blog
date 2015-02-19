@@ -28,12 +28,12 @@ var ReactBlog = React.createClass({
   },
   render: function() {
     return (
-      <div className="layout">
-        <div className="layout layout-sidebar">
+      <div className="layout row">
+        <div className="layout-sidebar col-sm-12 col-md-4">
           <h1>ReactBlog</h1>
           <PostList handleTitleClick={this.focusPost} posts={this.state.posts}/>
         </div>
-        <div className="layout layout-content">
+        <div className="layout-content col-md-offset-4 col-sm-12 col-md-8">
           <ConnectBar />
           <PostViewer post={this.state.post}/>
         </div>
@@ -55,6 +55,7 @@ var PostList = React.createClass({
 
     return (
       <div className="posts-list">
+        <h3>Latest Blog Posts</h3>
         <ul>
           {postSnippets}
         </ul>
@@ -89,7 +90,6 @@ var PostViewer = React.createClass({
       var post = this.props.post;
       return (
         <div>
-          <h1>{post.title}</h1>
           <div dangerouslySetInnerHTML={{__html: post.content}} />
         </div>
       )

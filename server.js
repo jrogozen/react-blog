@@ -39,6 +39,7 @@ app.get('/api/posts', function(req, res) {
 });
 
 app.use(express.static('./public'));
+app.use(express.static('./vendor'));
 
 var port = process.env.PORT || 8080;
 
