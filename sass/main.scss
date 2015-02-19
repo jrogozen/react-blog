@@ -10,13 +10,13 @@ body {
 
 h1, h2, h3, h4, h5 {
   font-family: 'Montserrat', sans-serif;
-  margin: 0;
 }
 
 a {
   color: $lt-purple;
   text-decoration: none;
   &:hover {
+    color: $purple;
     text-decoration: underline;
   }
 }
@@ -26,6 +26,10 @@ a {
   margin-bottom: 20px;
 }
 
+.no-margin {
+  margin: 0 !important;
+}
+
 .posts-list {
   margin-top: 20px;
   ul {
@@ -33,21 +37,13 @@ a {
     margin-top: 10px;
     padding: 0;
   }
-  li {
+  h1 {
+    font-size: 16px;
     color: $lt-purple;
     &:hover {
+      color: $purple;
       cursor: pointer;
       text-decoration: underline;
     }
-  }
-  h1 {
-    font-size: 16px;
-  }
-}
-
-.layout-sidebar {
-  position: relative;
-  @media (min-width: 992px) {
-    position: fixed;
   }
 }

@@ -29,11 +29,11 @@ var ReactBlog = React.createClass({
   render: function() {
     return (
       <div className="layout row">
-        <div className="layout-sidebar col-sm-12 col-md-4">
-          <h1>ReactBlog</h1>
+        <div className="layout-sidebar col-sm-12 col-md-3">
+          <h1 className="no-margin">ReactBlog</h1>
           <PostList handleTitleClick={this.focusPost} posts={this.state.posts}/>
         </div>
-        <div className="layout-content col-md-offset-4 col-sm-12 col-md-8">
+        <div className="layout-content col-sm-12 col-md-9">
           <ConnectBar />
           <PostViewer post={this.state.post}/>
         </div>
