@@ -9,5 +9,5 @@ Simple blog CMS based off of Jekyll. Powered by Node + React.
 ```
 ***Start Server***
 ```
-npm run start-dev && node server.js
+npm run start-dev
 ```
