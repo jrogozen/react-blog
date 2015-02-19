@@ -9,6 +9,7 @@ Thumbs.db
 .module-cache
 node_modules
 bower_components
+vendor
 
 heroku
 heroku.pub

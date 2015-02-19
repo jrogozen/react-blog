@@ -11,14 +11,21 @@
     "express": "4.x",
     "jquery-browserify": "^1.8.1",
     "marked": "^0.3.3",
+    "node-sass": "^2.0.1",
     "q": "^1.1.2",
-    "underscore": "^1.7.0"
+    "underscore": "^1.7.0",
+    "watchify": "^2.3.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "build-dev": "browserify -e app/bootstrap.js -t reactify -o public/scripts/bundle.dev.js -d",
+    "start-dev": "NODE_ENV=development npm run watch",
+    "watch": "npm run watch-server & npm run watch-assets",
+    "watch-server": "nodemon server.js",
+    "watch-assets": "npm run watch-js & npm run watch-css",
+    "watch-js": "watchify -e app/bootstrap.js -t reactify -o public/scripts/bundle.dev.js -d",
+    "watch-css": "node-sass -w --output-style compressed sass/main.scss -o public/styles",
     "build-min": "browserify -e app/bootstrap.js -t reactify -t uglifyify -o publi/scripts/bundle.min.js"
   }
 }

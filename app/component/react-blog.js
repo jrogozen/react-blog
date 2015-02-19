@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 var React = require('../../vendor/react/react');
+var ConnectBar = require('./connect-bar');
 var $ = require('jquery-browserify');
 
 var ReactBlog = React.createClass({
@@ -29,9 +30,11 @@ var ReactBlog = React.createClass({
     return (
       <div className="layout">
         <div className="layout layout-sidebar">
+          <h1>ReactBlog</h1>
           <PostList handleTitleClick={this.focusPost} posts={this.state.posts}/>
         </div>
         <div className="layout layout-content">
+          <ConnectBar />
           <PostViewer post={this.state.post}/>
         </div>
       </div>
